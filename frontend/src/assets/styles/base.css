@@ -6,6 +6,7 @@
   --vt-c-text: #111111;
   --vt-c-elem-dark: #161616;
   --vt-c-elem-red: #FE3602;
+  --vt-c-elem-red-muted: #e02e02b6;
   --vt-c-elem-gray: #868686;
 }
 
@@ -15,6 +16,8 @@
 
   --color-heading: var(--vt-c-text);
   --color-text: var(--vt-c-text);
+  --color-text-hover: var(--vt-c-elem-red);
+  --color-text-muted: var(--vt-c-elem-red-muted);
 
   --section-gap: 160px;
 }
@@ -30,6 +33,8 @@
 
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-text-dark-2);
+    --color-text-hover: var(--vt-c-elem-red);
+    --color-text-muted: var(--vt-c-elem-red-muted);
   }
 }
 
