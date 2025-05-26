@@ -5,16 +5,27 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <nav>
+      <span>
+        <RouterLink to="/">Shop</RouterLink>
+        <RouterLink to="/login">Become a Seller</RouterLink>
+        <RouterLink to="/login">Contact Us</RouterLink>
+      </span>
+      <span>
+        <RouterLink to="/login">@niff.wear</RouterLink>
+      </span>
+      <span>
+        <img alt="Niff logo" class="logo" src="@/assets/images/logo.svg" width="74px" height="24px"/>
+      </span>
+      <span>
+        <RouterLink to="/login">Search</RouterLink>
+      </span>
+      <span>
+        <RouterLink to="/login">Cart</RouterLink>
+        <RouterLink to="/login">Profile</RouterLink>
+      </span>
+    </nav>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
   </header>
 
   <RouterView />
@@ -36,50 +47,7 @@ nav {
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
+  display: flex;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>
