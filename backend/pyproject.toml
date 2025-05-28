@@ -7,7 +7,7 @@ authors = [
 ]
 license = {text = "Apache 2.0"}
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = [
     "django (>=5.2,<6.0)",
     "django-debug-toolbar (>=5.1.0,<6.0.0)",
@@ -44,7 +44,7 @@ extend-ignore = [
 
 [tool.black]
 line-length = 99
-target-version = ['py313']
+target-version = ['py312']
 extend-exclude = '''
 (
   ^/venv/
