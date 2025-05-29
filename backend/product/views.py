@@ -25,9 +25,7 @@ class ImageViewSet(viewsets.ModelViewSet):
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.prefetch_related("options", "images").select_related(
-        "category", "main_image"
-    )
+    queryset = Product.objects.all()
     permission_classes = (IsAdminOrReadOnly,)
 
     def get_serializer_class(self):
@@ -38,6 +36,11 @@ class ProductViewSet(viewsets.ModelViewSet):
             return ProductDetailSerializer
 
         return ProductSerializer
+
+    def get_queryset(self):
+        return Product.objects.filter(is_active=True).prefetch_related("options", "images").select_related(
+            "category", "main_image"
+        )
 
 
 class OptionViewSet(viewsets.ModelViewSet):
