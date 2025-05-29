@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   django:
     build:
@@ -22,22 +20,17 @@ services:
       timeout: 10s
       retries: 5
 
-  # Revamped: Your Vue.js SPA service (now serves directly via Nginx in its container)
   vue:
     build:
       context: ./frontend
-      dockerfile: Dockerfile # This is the Dockerfile from Step 1
-    # No env_file or environment needed here for Nginx itself,
-    # as environment variables for Vue are usually baked in during `npm run build`.
+      dockerfile: Dockerfile
     ports:
-      - "5025:80" # Map host port 5025 to container's Nginx port 80
-    # For a production build, volumes for source code are typically removed
-    # as the app is built into the image. Uncomment if you want to mount for dev.
+      - "5025:80"
     # volumes:
     #   - ./frontend:/app # Mount the frontend source code for hot-reloading (development)
     #   - /app/node_modules # Anonymous volume to prevent host node_modules issues
     depends_on:
-      - django # Vue often depends on Django being up for API calls (e.g., when it loads initially)
+      - django
 
   db:
     image: postgres:17-alpine
