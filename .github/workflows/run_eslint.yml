@@ -1,0 +1,29 @@
+name: Lint with Flake8
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  flake8-lint:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm install
+      - run: npm run build --if-present
+
+      - name: Run eslint
+        run: npx eslint .

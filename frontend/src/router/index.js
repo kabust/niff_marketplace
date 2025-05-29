@@ -2,10 +2,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 // Lazy load views to improve initial load performance
-const HomeView = () => import('../views/Home/Home.vue');
+const HomeView = () => import('../views/Home/HomeView.vue');
 // const ProductsView = () => import('../views/Products/Products.vue');
 // const ProductDetailView = () => import('../views/ProductDetail/ProductDetail.vue');
-const LoginView = () => import('../views/Auth/Login.vue');
+const LoginView = () => import('../views/Auth/LoginView.vue');
 // const RegisterView = () => import('../views/Auth/Register.vue');
 // const UserProfileView = () => import('../views/UserProfile/UserProfile.vue');
 // const NotFoundView = () => import('../views/NotFound.vue'); // Or a generic 404 page
