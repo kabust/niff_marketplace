@@ -1,4 +1,4 @@
-name: Lint with Flake8
+name: Lint with ESLint
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - '**'
 
 jobs:
-  flake8-lint:
+  eslint:
     runs-on: ubuntu-latest
 
     defaults:
