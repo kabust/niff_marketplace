@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from rest_framework import serializers
 
 from product.models import Product, Option, Category, Image
@@ -44,7 +45,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "main_image",
         )
 
-    def create(self, validated_data):
+    def create(self, validated_data: Dict[str, Any]) -> Product:
         images_data = validated_data.pop("main_image")
         images = validated_data.pop("images")
         options = validated_data.pop("options")

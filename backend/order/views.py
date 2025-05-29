@@ -1,5 +1,7 @@
+from django.db.models import QuerySet
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.serializers import BaseSerializer
 
 from order.models import Checkout, CartEntry, Cart, PaymentMethod, Order
 from order.serializers import (
@@ -34,12 +36,12 @@ class CheckoutViewSet(viewsets.ModelViewSet):
     queryset = Checkout.objects.all()
     permission_classes = (IsAuthenticated,)
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         if self.request.user.is_superuser:
             return self.queryset
         return self.queryset.filter(user=self.request.user)
 
-    def get_serializer_class(self):
+    def get_serializer_class(self) -> type[BaseSerializer]:
         if self.action == "list":
             return CheckoutListSerializer
 
@@ -48,7 +50,7 @@ class CheckoutViewSet(viewsets.ModelViewSet):
 
         return CheckoutSerializer
 
-    def perform_create(self, serializer):
+    def perform_create(self, serializer: BaseSerializer) -> None:
         serializer.save(user=self.request.user)
 
 
@@ -56,7 +58,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     permission_classes = (IsAuthenticated,)
 
-    def get_serializer_class(self):
+    def get_serializer_class(self) -> type[BaseSerializer]:
         if self.action == "list":
             return OrderListSerializer
 

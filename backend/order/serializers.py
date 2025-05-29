@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from rest_framework import serializers
 
 from order.models import CartEntry, Cart, PaymentMethod, Checkout, Order
@@ -56,7 +57,7 @@ class CheckoutSerializer(serializers.ModelSerializer):
             "house_number_payment",
         )
 
-    def validate(self, data):
+    def validate(self, data: Dict[str, Any]) -> Dict[str, Any]:
         if not data.get("is_address_differs", True):
             data["first_name_payment"] = data.get("first_name_delivery")
             data["last_name_payment"] = data.get("last_name_delivery")
@@ -66,7 +67,7 @@ class CheckoutSerializer(serializers.ModelSerializer):
             data["house_number_payment"] = data.get("house_number_delivery")
         return data
 
-    def create(self, validated_data):
+    def create(self, validated_data: Dict[str, Any]) -> Checkout:
         checkout = super().create(validated_data)
         token, exp_time = get_authentication_code_payu()
         customer_ip = self.context.get("request").META.get("REMOTE_ADDR")

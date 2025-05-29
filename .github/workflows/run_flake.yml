@@ -23,7 +23,7 @@ jobs:
           python-version: '3.13'
 
       - name: Install flake8 with pyproject support
-        run: pip install flake8 flake8-pyproject
+        run: pip install flake8 flake8-pyproject flake8-annotations
 
       - name: Run flake8 via pflake8
         run: flake8p .
