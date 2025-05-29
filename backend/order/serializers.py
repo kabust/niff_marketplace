@@ -103,8 +103,35 @@ class CheckoutSerializer(serializers.ModelSerializer):
         return checkout
 
 
+class CheckoutListSerializer(CheckoutSerializer):
+    cart = CartSerializer(read_only=True)
+    payment_method = PaymentMethodSerializer(read_only=True)
+
+
+class CheckoutDetailSerializer(CheckoutSerializer):
+    user = serializers.CharField(source="user.email", read_only=True)
+    cart = CartSerializer(read_only=True)
+    payment_method = PaymentMethodSerializer(read_only=True)
+
+    class Meta(CheckoutSerializer.Meta):
+        fields = CheckoutSerializer.Meta.fields + ("user",)
+
+
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ("id", "user", "checkout", "redirect_url", "payu_order_id")
         read_only_fields = ("id", "user", "checkout", "redirect_url", "payu_order_id")
+
+
+class OrderListSerializer(OrderSerializer):
+    user = serializers.CharField(source="user.email")
+    checkout = CheckoutSerializer()
+
+
+class OrderDetailSerializer(OrderSerializer):
+    user = serializers.CharField(source="user.email")
+    checkout = CheckoutSerializer()
+
+    class Meta(OrderSerializer.Meta):
+        fields = OrderSerializer.Meta.fields + ("timestamp",)

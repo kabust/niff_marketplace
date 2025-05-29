@@ -8,6 +8,10 @@ from order.serializers import (
     CheckoutSerializer,
     PaymentMethodSerializer,
     OrderSerializer,
+    OrderListSerializer,
+    OrderDetailSerializer,
+    CheckoutListSerializer,
+    CheckoutDetailSerializer,
 )
 
 
@@ -28,7 +32,6 @@ class PaymentMethodViewSet(viewsets.ModelViewSet):
 
 class CheckoutViewSet(viewsets.ModelViewSet):
     queryset = Checkout.objects.all()
-    serializer_class = CheckoutSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
@@ -36,11 +39,28 @@ class CheckoutViewSet(viewsets.ModelViewSet):
             return self.queryset
         return self.queryset.filter(user=self.request.user)
 
+    def get_serializer_class(self):
+        if self.action == "list":
+            return CheckoutListSerializer
+
+        if self.action == "retrieve":
+            return CheckoutDetailSerializer
+
+        return CheckoutSerializer
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
-    serializer_class = OrderSerializer
     permission_classes = (IsAuthenticated,)
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return OrderListSerializer
+
+        if self.action == "retrieve":
+            return OrderDetailSerializer
+
+        return OrderSerializer
