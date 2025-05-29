@@ -2,6 +2,8 @@ from oauth2_provider.settings import oauth2_settings
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.request import Request
+from rest_framework.serializers import BaseSerializer
 from oauth2_provider.contrib.rest_framework import OAuth2Authentication, TokenHasReadWriteScope
 
 from user.models import User
@@ -27,30 +29,30 @@ class UserViewSet(viewsets.GenericViewSet):
         "login": UserLoginSerializer,
     }
 
-    def get_serializer_class(self):
+    def get_serializer_class(self) -> type[BaseSerializer]:
         return self.serializer_classes.get(self.action, self.default_serializer_class)
 
     @action(detail=False, url_path="me", methods=["get"])
-    def me(self, request):
+    def me(self, request: Request) -> Response:
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
 
     @action(detail=False, methods=["post"], permission_classes=[permissions.AllowAny])
-    def register(self, request):
+    def register(self, request: Request) -> Response:
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({"message": "User created successfully."}, status=status.HTTP_201_CREATED)
 
     @action(detail=False, methods=["post"])
-    def set_password(self, request):
+    def set_password(self, request: Request) -> Response:
         serializer = self.get_serializer(data=request.data, instance=request.user)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({"message": "Password updated successfully."})
 
     @action(detail=False, methods=["post"], permission_classes=[permissions.AllowAny])
-    def login(self, request):
+    def login(self, request: Request) -> Response:
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]

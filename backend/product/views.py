@@ -1,6 +1,9 @@
+from django.db.models import QuerySet
 from rest_framework import viewsets
+from rest_framework.serializers import BaseSerializer
 
 from product.models import Product, Option, Category, Image
+from product.pagination import CustomPageNumberPagination
 from product.permissions import IsAdminOrReadOnly
 from product.serializers import (
     ProductSerializer,
@@ -25,12 +28,11 @@ class ImageViewSet(viewsets.ModelViewSet):
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.prefetch_related("options", "images").select_related(
-        "category", "main_image"
-    )
+    queryset = Product.objects.all()
+    pagination_class = CustomPageNumberPagination
     permission_classes = (IsAdminOrReadOnly,)
 
-    def get_serializer_class(self):
+    def get_serializer_class(self) -> type[BaseSerializer]:
         if self.action == "list":
             return ProductListSerializer
 
@@ -38,6 +40,15 @@ class ProductViewSet(viewsets.ModelViewSet):
             return ProductDetailSerializer
 
         return ProductSerializer
+
+    def get_queryset(self) -> QuerySet:
+        return Product.objects.filter(
+            is_active=True
+        ).prefetch_related(
+            "options", "images"
+        ).select_related(
+            "category", "main_image"
+        )
 
 
 class OptionViewSet(viewsets.ModelViewSet):

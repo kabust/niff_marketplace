@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from rest_framework import serializers
 
 from order.models import CartEntry, Cart, PaymentMethod, Checkout, Order
@@ -56,7 +57,7 @@ class CheckoutSerializer(serializers.ModelSerializer):
             "house_number_payment",
         )
 
-    def validate(self, data):
+    def validate(self, data: Dict[str, Any]) -> Dict[str, Any]:
         if not data.get("is_address_differs", True):
             data["first_name_payment"] = data.get("first_name_delivery")
             data["last_name_payment"] = data.get("last_name_delivery")
@@ -66,7 +67,7 @@ class CheckoutSerializer(serializers.ModelSerializer):
             data["house_number_payment"] = data.get("house_number_delivery")
         return data
 
-    def create(self, validated_data):
+    def create(self, validated_data: Dict[str, Any]) -> Checkout:
         checkout = super().create(validated_data)
         token, exp_time = get_authentication_code_payu()
         customer_ip = self.context.get("request").META.get("REMOTE_ADDR")
@@ -103,8 +104,35 @@ class CheckoutSerializer(serializers.ModelSerializer):
         return checkout
 
 
+class CheckoutListSerializer(CheckoutSerializer):
+    cart = CartSerializer(read_only=True)
+    payment_method = PaymentMethodSerializer(read_only=True)
+
+
+class CheckoutDetailSerializer(CheckoutSerializer):
+    user = serializers.CharField(source="user.email", read_only=True)
+    cart = CartSerializer(read_only=True)
+    payment_method = PaymentMethodSerializer(read_only=True)
+
+    class Meta(CheckoutSerializer.Meta):
+        fields = CheckoutSerializer.Meta.fields + ("user",)
+
+
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ("id", "user", "checkout", "redirect_url", "payu_order_id")
         read_only_fields = ("id", "user", "checkout", "redirect_url", "payu_order_id")
+
+
+class OrderListSerializer(OrderSerializer):
+    user = serializers.CharField(source="user.email")
+    checkout = CheckoutSerializer()
+
+
+class OrderDetailSerializer(OrderSerializer):
+    user = serializers.CharField(source="user.email")
+    checkout = CheckoutSerializer()
+
+    class Meta(OrderSerializer.Meta):
+        fields = OrderSerializer.Meta.fields + ("timestamp",)

@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 
@@ -17,7 +18,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         model = User
         fields = ("email", "password")
 
-    def create(self, validated_data):
+    def create(self, validated_data: Dict[str, Any]) -> User:
         return User.objects.create_user(**validated_data)
 
 
@@ -28,7 +29,7 @@ class UserLoginSerializer(serializers.Serializer):
     class Meta:
         fields = ("email", "password")
 
-    def validate(self, data):
+    def validate(self, data: Dict[str, str]) -> Dict[str, Any]:
         user = authenticate(email=data["email"], password=data["password"])
         if not user:
             raise serializers.ValidationError("Invalid email or password.")
@@ -40,13 +41,13 @@ class PasswordUpdateSerializer(serializers.Serializer):
     old_password = serializers.CharField(write_only=True, style={"input_type": "password"})
     new_password = serializers.CharField(write_only=True, style={"input_type": "password"})
 
-    def validate_old_password(self, value):
+    def validate_old_password(self, value: str) -> str:
         user = self.context["request"].user
         if not user.check_password(value):
             raise serializers.ValidationError("Old password is incorrect.")
         return value
 
-    def save(self, **kwargs):
+    def save(self, **kwargs: Any) -> User:
         user = self.context["request"].user
         user.set_password(self.validated_data["new_password"])
         user.save()

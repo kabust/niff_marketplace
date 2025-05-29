@@ -13,7 +13,7 @@ class GenderChoice(models.TextChoices):
     UNISEX = "unisex", "Unisex"
 
 
-def movie_image_file_path(instance, title):
+def movie_image_file_path(instance: 'Image', title: str) -> str:
     _, extension = os.path.splitext(title)
     title = f"{slugify(instance.filename)}-{uuid.uuid4()}{extension}"
 
@@ -24,7 +24,7 @@ class Image(models.Model):
     filename = models.CharField(max_length=255, blank=True)
     image = models.ImageField(upload_to=movie_image_file_path)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.filename
 
 
@@ -38,7 +38,7 @@ class Option(models.Model):
     type = models.CharField(max_length=15, choices=OptionType.choices)
     value = models.CharField(max_length=63)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.type}: {self.value}"
 
 
@@ -48,7 +48,7 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = "Categories"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 
@@ -72,8 +72,8 @@ class Product(models.Model):
     gender = models.CharField(max_length=10, choices=GenderChoice, default=GenderChoice.UNISEX)
 
     @property
-    def final_price(self):
+    def final_price(self) -> Decimal:
         return self.price * ((100 - Decimal(self.discount)) / 100)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.title} ({self.category.name}), {self.amount} pcs in stock"

@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.conf import settings
 from django.core.validators import MaxValueValidator
 from django.db import models
@@ -9,10 +11,10 @@ class Cart(models.Model):
     timestamp_first_added = models.DateTimeField(auto_now=True)
 
     @property
-    def total_value(self):
+    def total_value(self) -> int:
         return sum(entry.entry_total for entry in self.cart_entries.all())
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.total_value}"
 
 
@@ -22,10 +24,10 @@ class CartEntry(models.Model):
     amount = models.SmallIntegerField(validators=[MaxValueValidator(100)])
 
     @property
-    def entry_total(self):
+    def entry_total(self) -> Decimal:
         return self.product.final_price * self.amount
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.product}: {self.amount} pcs, {self.entry_total}"
 
 
@@ -38,7 +40,7 @@ class PaymentMethod(models.Model):
 
     name = models.CharField(max_length=63, choices=PaymentType.choices)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 
@@ -62,7 +64,7 @@ class Checkout(models.Model):
     street_name_payment = models.CharField(max_length=255, blank=True, null=True)
     house_number_payment = models.CharField(max_length=63, blank=True, null=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.is_payed}"
 
 
@@ -73,5 +75,5 @@ class Order(models.Model):
     redirect_url = models.URLField(max_length=511, blank=True, null=True)
     payu_order_id = models.CharField(max_length=255, blank=True, null=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"User {self.user.email} ordered items from cart_id: {self.checkout.id}"
