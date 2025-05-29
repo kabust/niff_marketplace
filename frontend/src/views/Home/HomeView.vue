@@ -1,7 +1,7 @@
 <script setup>
+import HeroComponent from '@/components/ui/HeroComponent.vue'
 </script>
 
 <template>
-  <main>
-  </main>
+  <HeroComponent/>
 </template>
