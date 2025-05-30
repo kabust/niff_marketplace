@@ -1,0 +1,54 @@
+@import './fonts.css';
+
+/* color palette */
+:root {
+  --vt-c-background: #FBFCFD;
+  --vt-c-text: #111111;
+  --vt-c-elem-dark: #161616;
+  --vt-c-elem-red: #FE3602;
+  --vt-c-elem-red-muted: #e02e02b6;
+  --vt-c-elem-gray: #868686;
+}
+
+/* semantic color variables for this project */
+:root {
+  --color-background: var(--vt-c-background);
+
+  --color-heading: var(--vt-c-text);
+  --color-text: var(--vt-c-text);
+  --color-text-white: var(--vt-c-background);
+  --color-text-muted: var(--vt-c-elem-dark);
+  --color-text-gray: var(--vt-c-elem-gray);
+  --color-text-orange-hover: var(--vt-c-elem-red);
+  --color-text-orange-active: var(--vt-c-elem-red-muted);
+
+  --section-gap: 160px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: 1.6;
+  font-family:
+    'Kulim Park', sans-serif;
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
