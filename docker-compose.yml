@@ -1,32 +1,49 @@
 services:
   django:
     build:
-      context: .
+      context: ./backend
+      dockerfile: Dockerfile
     env_file:
       - .env
     ports:
       - "8001:8000"
     volumes:
-      - ./:/app
+      - ./backend:/app
       - media_volume:/app/files/media
-    working_dir: /app
-    command: >
-      sh -c "
-        python manage.py wait_for_db &&
-        python manage.py migrate &&
-        python manage.py runserver 0.0.0.0:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy # Use healthcheck
+    entrypoint: /usr/local/bin/django-entrypoint.sh
+    healthcheck:
+      test: ["CMD-SHELL", "python manage.py check --deploy || exit 1"] # Basic Django health check
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  vue:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5025:80"
+    # volumes:
+    #   - ./frontend:/app # Mount the frontend source code for hot-reloading (development)
+    #   - /app/node_modules # Anonymous volume to prevent host node_modules issues
+    depends_on:
+      - django
 
   db:
-    image: postgres:alpine3.21
-    restart: always
+    image: postgres:17-alpine
+    restart: unless-stopped
     env_file:
       - .env
-    ports:
-      - "5432:5432"
     volumes:
       - db_volume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"] # Health check for PostgreSQL
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   db_volume:

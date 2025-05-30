@@ -1,0 +1,83 @@
+from decimal import Decimal
+
+from django.conf import settings
+from django.core.validators import MaxValueValidator
+from django.db import models
+
+from product.models import Product
+
+
+class Cart(models.Model):
+    timestamp_first_added = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE
+    )
+    session_id = models.CharField(max_length=255, null=True, blank=True)
+
+    @property
+    def total_value(self) -> int:
+        return sum(entry.entry_total for entry in self.cart_entries.all())
+
+    def __str__(self) -> str:
+        return f"{self.total_value}"
+
+
+class CartEntry(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="cart_entries")
+    amount = models.SmallIntegerField(validators=[MaxValueValidator(100)])
+
+    @property
+    def entry_total(self) -> Decimal:
+        return self.product.final_price * self.amount
+
+    def __str__(self) -> str:
+        return f"{self.product}: {self.amount} pcs, {self.entry_total}"
+
+
+class PaymentMethod(models.Model):
+    class PaymentType(models.TextChoices):
+        GOOGLE = "google", "Google"
+        APPLE = "apple", "Apple"
+        CARD = "card", "Card"
+        CASH = "cash", "Cash"
+
+    name = models.CharField(max_length=63, choices=PaymentType.choices)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Checkout(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    payment_method = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True)
+    is_payed = models.BooleanField(default=False)
+    is_address_differs = models.BooleanField(default=False)
+    payment_finalized_timestamp = models.DateTimeField(null=True)
+    first_name_delivery = models.CharField(max_length=63)
+    last_name_delivery = models.CharField(max_length=63)
+    country_delivery = models.CharField(max_length=255)
+    city_delivery = models.CharField(max_length=255)
+    street_name_delivery = models.CharField(max_length=255)
+    house_number_delivery = models.CharField(max_length=63, blank=True, null=True)
+    first_name_payment = models.CharField(max_length=63, blank=True, null=True)
+    last_name_payment = models.CharField(max_length=63, blank=True, null=True)
+    country_payment = models.CharField(max_length=255, blank=True, null=True)
+    city_payment = models.CharField(max_length=255, blank=True, null=True)
+    street_name_payment = models.CharField(max_length=255, blank=True, null=True)
+    house_number_payment = models.CharField(max_length=63, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return f"{self.is_payed}"
+
+
+class Order(models.Model):
+    timestamp = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    checkout = models.ForeignKey(Checkout, on_delete=models.SET_NULL, null=True)
+    redirect_url = models.URLField(max_length=511, blank=True, null=True)
+    payu_order_id = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return f"User {self.user.email} ordered items from cart_id: {self.checkout.id}"

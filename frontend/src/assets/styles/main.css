@@ -1,0 +1,19 @@
+@import './base.css';
+
+#app {
+  margin: 0 0;
+  padding: 2rem;
+  font-weight: normal;
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: top;
+  }
+
+  #app {
+    padding: 0 0;
+    overflow-x: hidden;
+  }
+}
