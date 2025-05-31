@@ -13,6 +13,7 @@
 /* semantic color variables for this project */
 :root {
   --color-background: var(--vt-c-background);
+  --color-background-dark: var(--vt-c-elem-dark);
 
   --color-heading: var(--vt-c-text);
   --color-text: var(--vt-c-text);
@@ -21,6 +22,9 @@
   --color-text-gray: var(--vt-c-elem-gray);
   --color-text-orange-hover: var(--vt-c-elem-red);
   --color-text-orange-active: var(--vt-c-elem-red-muted);
+
+  --color-border-black: var(--vt-c-text);
+  --color-border-white: var(--vt-c-background);
 
   --section-gap: 160px;
 }

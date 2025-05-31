@@ -1,11 +1,11 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 
-import Instagram from '@/assets/images/Instagram.svg'
 import Search from '@/assets/images/Search.svg'
 import Cart from '@/assets/images/Cart.svg'
 import Profile from '@/assets/images/Profile.svg'
-
+import LogoBlack from '../common/LogoBlack.vue'
+import InstagramLink from '../common/InstagramLink.vue'
 
 function search() {
   console.log("test");
@@ -21,12 +21,10 @@ function search() {
         <RouterLink to="/login">Contact Us</RouterLink>
       </span>
       <span class="inst">
-        <RouterLink to="/login">
-          <Instagram/>@niff.wear
-        </RouterLink>
+        <InstagramLink/>
       </span>
       <span class="logo">
-        <RouterLink to="/"><img class="logo" src="../../assets/images/logo.svg" width="72px" height="24px" /></RouterLink>
+        <LogoBlack/>
       </span>
       <span class="search">
         <Search />
@@ -53,9 +51,10 @@ nav {
   width: 100vw;
   font-size: 16px;
   margin-top: 0;
-  display: flex;
-  border: 1px solid black;
+  display: grid;
+  border: 1px solid var(--color-border-black);
   border-top: 0;
+  grid-template-columns: 1.8fr 0.6fr 0.4fr 1.5fr 0.7fr;
 }
 
 nav a {
@@ -111,7 +110,7 @@ nav span {
   justify-content: center;
   align-items: center;
   padding: 24px 54.5px;
-  border-right: 1px solid black;
+  border-right: 1px solid var(--color-border-black);
   gap: 24px;
 }
 
@@ -149,10 +148,9 @@ nav span:last-child {
   border-right: none;
 }
 
-nav .info   { flex: 0 0 30%; }
 nav .inst, .inst a {display: flex; flex: 0 0 15%; gap: 8px;}
-nav .logo   { flex: 0 0 10%;}
-nav .search { flex: 0 0 30%; gap: 8px;}
+nav .logo   { margin: auto;}
+nav .search { gap: 8px;}
 nav .user, .user a  { display: flex; flex: 0 0 15%; gap: 8px; }
 
 </style>

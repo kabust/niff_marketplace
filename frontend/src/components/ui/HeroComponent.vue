@@ -16,7 +16,9 @@ const buttonText = `Discover Products`;
         </h1>
         <p>Discover limited drops from the next wave of fashion talent</p>
       </div>
-      <ActionButton :button-text="buttonText" arrow="True"/>
+      <span>
+        <ActionButton :button-text="buttonText" arrow="True"/>
+      </span>
     </div>
     <div class="right-side"><img src="../../assets/demo/front-image1.png"></div>
   </div>
@@ -61,6 +63,11 @@ const buttonText = `Discover Products`;
   flex-direction: column;
   gap: 32px;
   justify-content: center;
-  border-right: 1px black solid;
+  border-right: 1px var(--color-border-black) solid;
 }
+
+.hero-grid .left-side span {
+  width: 326px;
+}
+
 </style>

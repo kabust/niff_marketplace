@@ -19,7 +19,7 @@ defineProps(['buttonText', 'arrow'])
 button {
   color: var(--color-text-white);
   background-color: var(--color-text-orange-hover);
-  width: 326px;
+  width: 100%;
   height: 56px;
   border: 0;
   font-weight: 700;

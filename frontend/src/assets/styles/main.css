@@ -6,6 +6,10 @@
   font-weight: normal;
 }
 
+p {
+  letter-spacing: 8%;
+}
+
 @media (min-width: 1024px) {
   body {
     display: flex;
