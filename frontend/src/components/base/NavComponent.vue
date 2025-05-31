@@ -54,7 +54,7 @@ nav {
   display: grid;
   border: 1px solid var(--color-border-black);
   border-top: 0;
-  grid-template-columns: 1.8fr 0.6fr 0.4fr 1.5fr 0.7fr;
+  grid-template-columns: 1fr 0.5fr 0.3fr 0.9fr 0.6fr;
 }
 
 nav a {
@@ -149,7 +149,6 @@ nav span:last-child {
 }
 
 nav .inst, .inst a {display: flex; flex: 0 0 15%; gap: 8px;}
-nav .logo   { margin: auto;}
 nav .search { gap: 8px;}
 nav .user, .user a  { display: flex; flex: 0 0 15%; gap: 8px; }
 

@@ -67,7 +67,6 @@ import InstagramLink from '../common/InstagramLink.vue'
   grid-template-columns: 1.8fr 1.1fr 1.1fr 1.1fr 2.8fr;
   margin: auto;
   height: 276px;
-  border: 1px solid var(--color-border-white);
 }
 
 .footer-section {
@@ -148,8 +147,7 @@ import InstagramLink from '../common/InstagramLink.vue'
   text-align: left;
   padding: 16px;
   margin: auto;
-  border: 1px solid var(--color-border-white);
-  border-top: none;
+  border-top: 1px solid var(--color-border-white);
   height: 56px;
 }
 </style>

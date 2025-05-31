@@ -1,7 +1,17 @@
 <script setup>
 import Arrow from '@/assets/images/Arrow.svg'
 
-defineProps(['buttonText', 'arrow'])
+const props = defineProps({
+  buttonText: {
+    type: String,
+    required: true,
+  },
+  arrow: {
+    type: Boolean,
+    required: false,
+  }
+})
+
 </script>
 
 
