@@ -1,5 +1,5 @@
 """
-WSGI config for raw_marketplace project.
+WSGI config for niff_marketplace project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "raw_marketplace.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "niff_marketplace.settings")
 
 application = get_wsgi_application()

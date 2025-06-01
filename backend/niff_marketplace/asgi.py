@@ -1,5 +1,5 @@
 """
-ASGI config for raw_marketplace project.
+ASGI config for niff_marketplace project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "raw_marketplace.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "niff_marketplace.settings")
 
 application = get_asgi_application()
