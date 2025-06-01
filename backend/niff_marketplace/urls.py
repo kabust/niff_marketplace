@@ -1,5 +1,5 @@
 """
-URL configuration for raw_marketplace project.
+URL configuration for niff_marketplace project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.2/topics/http/urls/
