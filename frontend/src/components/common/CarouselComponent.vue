@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import ImageCard from '../common/ImageCard.vue';
-import DirectionButton from '../icons/DirectionButton.vue';
+import DirectionButton from './DirectionButton.vue';
 
 const props = defineProps({
   components: {

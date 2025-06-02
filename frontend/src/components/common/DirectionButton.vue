@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({
+defineProps({
   direction: {
     type: String,
     default: 'next' // 'next' or 'prev'
