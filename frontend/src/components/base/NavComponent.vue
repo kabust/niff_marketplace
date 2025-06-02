@@ -52,7 +52,9 @@ nav {
   font-size: 16px;
   margin-top: 0;
   display: grid;
-  border: 1px solid var(--color-border-black);
+  border: var(--base-border-black);
+  border-right: none;
+  border-left: none;
   border-top: 0;
   grid-template-columns: 1fr 0.5fr 0.3fr 0.9fr 0.6fr;
 }
@@ -65,7 +67,7 @@ nav a {
 }
 
 nav a, nav svg :deep(path) {
-  transition: color 0.3s ease, stroke 0.3s ease;
+  transition: var(--base-transition);
 }
 
 @media (hover: hover) {
@@ -110,7 +112,7 @@ nav span {
   justify-content: center;
   align-items: center;
   padding: 24px 54.5px;
-  border-right: 1px solid var(--color-border-black);
+  border-right: var(--base-border-black);
   gap: 24px;
 }
 
@@ -128,7 +130,7 @@ nav .search input {
 }
 
 nav .search input::placeholder {
-  transition: color 0.3s ease, stroke 0.3s ease;
+  transition: var(--base-transition);
 }
 
 nav .search input::placeholder {

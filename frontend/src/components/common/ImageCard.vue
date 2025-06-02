@@ -2,24 +2,24 @@
 import { ref } from 'vue';
 
 const props = defineProps({
-  imgSrc: {
+  src: {
     type: String,
     required: true,
   },
-  imgBgSrc: {
+  bg: {
     type: String,
     required: false,
   }
-})
+});
 
-const hover = ref(false)
+const hover = ref(false);
 
 </script>
 
 <template>
   <div class="image-card" @mouseenter="hover = true" @mouseleave="hover = false">
-    <img :src="imgSrc" alt="primary" class="card-image base-image" />
-    <img :src="imgBgSrc" alt="hover" class="card-image hover-image" :class="{ 'opacity-100': hover, 'opacity-0': !hover }" />
+    <img :src="src" alt="primary" class="card-image base-image" />
+    <img :src="bg || src" alt="hover" class="card-image hover-image" :class="{ 'opacity-100': hover, 'opacity-0': !hover }" />
   </div>
 </template>
 
@@ -28,21 +28,21 @@ const hover = ref(false)
   width: 360px;
   height: 326px;
   transition: opacity 0.2s ease-in-out;
-}
-.image-card img {
-  object-fit: fill;
-  height: 100%;
-  width: 100%;
-  border: 1px solid var(--color-text);
-  border-top: none;
-}
-
-.image-card {
   position: relative;
   width: 100%;
   height: auto;
   overflow: hidden;
 }
+.image-card img {
+  aspect-ratio: var(--default-image-aspect-ratio, 1 / 1);
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  border: var(--base-border-black);
+  border-right: none;
+  border-top: none;
+}
+
 .card-image {
   width: 100%;
   height: auto;
@@ -50,7 +50,7 @@ const hover = ref(false)
   position: absolute;
   top: 0;
   left: 0;
-  transition: opacity 0.5s ease-in-out;
+  transition: var(--base-transition-ease-in-out);
 }
 .base-image {
   position: relative;

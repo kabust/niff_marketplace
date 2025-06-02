@@ -26,7 +26,20 @@
   --color-border-black: var(--vt-c-text);
   --color-border-white: var(--vt-c-background);
 
+  --color-button-disabled: var(--vt-c-elem-gray);
+
+  --base-border-black: 1px solid var(--color-border-black);
+  --base-border-white: 1px solid var(--color-border-white);
+
+  --header-height: 88px;
   --section-gap: 160px;
+
+  --base-transition: 0.3s ease;
+  --base-transition-ease-in-out: 0.3s ease-in-out;
+  --base-transition-fast: 0.1s ease;
+  --base-transition-slow: 0.5s ease;
+
+  --default-image-aspect-ratio: 360 / 326;
 }
 
 *,

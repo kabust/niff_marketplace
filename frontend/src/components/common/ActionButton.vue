@@ -25,7 +25,7 @@ const props = defineProps({
 </template>
 
 
-<style>
+<style scoped>
 button {
   color: var(--color-text-white);
   background-color: var(--color-text-orange-hover);
@@ -38,21 +38,21 @@ button {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: color 0.3s ease, stroke 0.3s ease, background-color 0.3s ease;
+  transition: var(--base-transition);
 }
 
-button svg path {
+button svg :deep(path) {
   stroke: var(--color-text-white);
-  transition: color 0.3s ease, stroke 0.3s ease, background-color 0.3s ease;
+  transition: var(--base-transition);
 }
 
-button:hover, button:hover svg path {
+button:hover, button:hover svg :deep(path) {
   color: var(--color-text);
   stroke: var(--color-text);
   cursor: pointer;
 }
 
-button:active, button:active svg path {
+button:active, button:active svg :deep(path) {
   background-color: var(--color-text-orange-active);
   color: var(--color-text);
   stroke: var(--color-text);

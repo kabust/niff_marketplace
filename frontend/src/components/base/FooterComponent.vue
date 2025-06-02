@@ -70,7 +70,7 @@ import InstagramLink from '../common/InstagramLink.vue'
 }
 
 .footer-section {
-  border-right: 1px solid var(--color-border-white);
+  border-right: var(--base-border-white);
 }
 
 .footer-section:last-child {
@@ -147,7 +147,7 @@ import InstagramLink from '../common/InstagramLink.vue'
   text-align: left;
   padding: 16px;
   margin: auto;
-  border-top: 1px solid var(--color-border-white);
+  border-top: var(--base-border-white);
   height: 56px;
 }
 </style>
