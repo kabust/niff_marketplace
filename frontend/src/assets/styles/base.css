@@ -47,7 +47,7 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
-  font-weight: normal;
+  /* font-weight: 300; */
 }
 
 input[type="search"]::-webkit-search-cancel-button {
@@ -68,4 +68,40 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 72px;
+}
+
+h2 {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 64px;
+}
+
+h3 {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+}
+
+h4 {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48px;
+}
+
+h5 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 40px;
+}
+
+h6 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
 }

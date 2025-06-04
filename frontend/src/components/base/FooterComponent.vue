@@ -2,11 +2,13 @@
 import ActionButton from '../common/ActionButton.vue';
 import LogoWhite from '../common/LogoWhite.vue';
 import InstagramLink from '../common/InstagramLink.vue'
+import SellerPreFooter from './SellerPreFooter.vue';
 </script>
 
 
 <template>
 <footer class="footer">
+  <SellerPreFooter/>
   <div class="footer-container">
     <div class="footer-section brand">
       <LogoWhite/>

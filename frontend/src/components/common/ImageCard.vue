@@ -19,7 +19,9 @@ const hover = ref(false);
 <template>
   <div class="image-card" @mouseenter="hover = true" @mouseleave="hover = false">
     <img :src="src" alt="primary" class="card-image base-image" />
-    <img :src="bg || src" alt="hover" class="card-image hover-image" :class="{ 'opacity-100': hover, 'opacity-0': !hover }" />
+    <img :src="bg || src" alt="hover" class="card-image hover-image"
+      :class="{ 'opacity-100': hover, 'opacity-0': !hover }" style="height: auto;" />
+    <slot />
   </div>
 </template>
 
@@ -33,6 +35,7 @@ const hover = ref(false);
   height: auto;
   overflow: hidden;
 }
+
 .image-card img {
   aspect-ratio: var(--default-image-aspect-ratio, 1 / 1);
   object-fit: cover;
@@ -52,9 +55,11 @@ const hover = ref(false);
   left: 0;
   transition: var(--base-transition-ease-in-out);
 }
+
 .base-image {
   position: relative;
 }
+
 .hover-image {
   opacity: 0;
 }
@@ -70,5 +75,4 @@ const hover = ref(false);
 .image-card:active {
   opacity: 0.5;
 }
-
 </style>

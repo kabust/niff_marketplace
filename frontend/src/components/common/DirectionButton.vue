@@ -41,6 +41,10 @@ button:hover:disabled svg :deep(path) {
   stroke: var(--color-button-disabled);
 }
 
+button:hover:disabled {
+  cursor: default;
+}
+
 button:disabled svg :deep(path) {
   stroke: var(--color-button-disabled);
 }
