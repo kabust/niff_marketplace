@@ -7,7 +7,6 @@ import ProductCard from '../common/ProductCard.vue';
 import CarouselComponent from '../common/CarouselComponent.vue';
 import DesignerComponent from '../common/DesignerComponent.vue';
 
-// Import images properly
 import image1 from '@/assets/demo/image1.png';
 import image2 from '@/assets/demo/image2.png';
 import image3 from '@/assets/demo/image3.png';
@@ -59,25 +58,25 @@ api_responses.value.forEach(response => {
         <p>Discover limited drops from the next wave of fashion talent</p>
       </div>
       <span>
-        <ActionButton :button-text="buttonText" arrow="True"/>
+        <ActionButton to="/shop" button-text="Discover Products" arrow="True"/>
       </span>
     </div>
     <div class="right-side"><img :src="frontImage1" alt="demo1"></div>
   </div>
 
   <CarouselComponent carousel-header="Categories" :components="categoryComponents" />
-  <ActionButton button-text="Discover Products" arrow="True" />
+  <ActionButton to="/shop" button-text="Discover Products" arrow="True" />
 
   <HeaderComponent title="New Designers" />
   <div class="designer-grid">
     <DesignerComponent :src="frontImage2" designer-name="Huy Morzhoviy" />
     <DesignerComponent :src="frontImage1" designer-name="John Doe" />
   </div>
-  <ActionButton button-text="See All" arrow="True" />
+  <ActionButton to="/designers" button-text="See All" arrow="True" />
 
   <CarouselComponent carousel-header="Featured Products" :components="productComponents" />
-  <ActionButton button-text="See All" arrow="True" />
-  
+  <ActionButton to="/shop" button-text="See All" arrow="True" />
+
 </template>
 
 

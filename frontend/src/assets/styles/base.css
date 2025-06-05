@@ -47,7 +47,7 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
-  /* font-weight: 300; */
+  letter-spacing: 8%;
 }
 
 input[type="search"]::-webkit-search-cancel-button {

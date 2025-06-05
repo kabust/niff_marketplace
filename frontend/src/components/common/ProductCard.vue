@@ -41,13 +41,11 @@ defineProps({
 <style scoped>
 .product-card {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
   padding: 16px;
   border: var(--base-border-black);
   border-top: none;
   border-right: none;
+  background-color: var(--color-background);
 }
 
 .product-info {
@@ -61,5 +59,4 @@ defineProps({
   line-height: 24px;
   color: var(--color-text-gray);
 }
-
 </style>

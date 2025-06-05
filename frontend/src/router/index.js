@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 // Lazy load views to improve initial load performance
 const HomeView = () => import('../views/Home/HomeView.vue');
-// const ProductsView = () => import('../views/Products/Products.vue');
+const ShopView = () => import('../views/Shop/ShopView.vue');
 // const ProductDetailView = () => import('../views/ProductDetail/ProductDetail.vue');
 const LoginView = () => import('../views/Auth/LoginView.vue');
 // const RegisterView = () => import('../views/Auth/Register.vue');
@@ -16,11 +16,11 @@ const routes = [
     name: 'Home',
     component: HomeView
   },
-  // {
-  //   path: '/products',
-  //   name: 'Products',
-  //   component: ProductsView
-  // },
+  {
+    path: '/shop',
+    name: 'Shop',
+    component: ShopView
+  },
   // {
   //   path: '/products/:id', // Dynamic segment for product ID
   //   name: 'ProductDetail',
