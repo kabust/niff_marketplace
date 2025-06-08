@@ -105,3 +105,8 @@ h6 {
   font-weight: 700;
   line-height: 32px;
 }
+
+a:visited {
+  color: var(--color-text);
+  text-decoration: none;
+}

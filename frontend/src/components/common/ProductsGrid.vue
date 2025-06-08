@@ -3,6 +3,14 @@ const props = defineProps({
   components: {
     type: Array,
     required: true,
+  },
+  totalPages: {
+    type: Number,
+    required: true
+  },
+  limit: {
+    type: Number,
+    required: true
   }
 });
 

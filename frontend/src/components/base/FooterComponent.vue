@@ -11,8 +11,10 @@ import SellerPreFooter from './SellerPreFooter.vue';
   <SellerPreFooter/>
   <div class="footer-container">
     <div class="footer-section brand">
-      <LogoWhite/>
-      <p>“A marketplace for emerging streetwear designers. Powered by vision, not trends.”</p>
+      <div>
+        <LogoWhite/>
+        <p>“A marketplace for emerging streetwear designers. Powered by vision, not trends.”</p>
+      </div>
       <InstagramLink/>
     </div>
 
@@ -73,6 +75,17 @@ import SellerPreFooter from './SellerPreFooter.vue';
 
 .footer-section {
   border-right: var(--base-border-white);
+}
+
+.footer-section.brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+div.footer-section.brand > div.instagram-link.dark {
+  padding: 16px;
+  border-top: var(--base-border-white);
 }
 
 .footer-section:last-child {

@@ -1,9 +1,11 @@
 <script setup>
 import { ref } from 'vue';
+import { markRaw } from 'vue';
 
 import ShopHeader from '@/components/ui/ShopHeader.vue';
 import ProductCard from '@/components/common/ProductCard.vue';
 import ProductsGrid from '@/components/common/ProductsGrid.vue';
+import PaginationComponent from '@/components/common/PaginationComponent.vue';
 
 import image1 from '@/assets/demo/image1.png';
 import image2 from '@/assets/demo/image2.png';
@@ -23,16 +25,25 @@ for (let i = 0; i < 16; i++) {
 
 let productComponents = ref([]);
 api_responses.value.forEach(response => {
-  let card = { name: ProductCard, props: {
-    ...response,
-    title: "Product Title",
-    designer: "Designer Name",
-    price: 130
-  }};
+  let card = { 
+    name: markRaw(ProductCard), 
+    props: {
+      ...response,
+      title: "Product Title",
+      designer: "Designer Name",
+      price: 130
+    }
+  };
   productComponents.value.push(card);
 });
 
 const itemsAmount = ref(productComponents.value.length);
+
+const finalProductComponents = ref({
+  totalPages: 3,
+  limit: 16,
+  components: productComponents.value
+});
 
 </script>
 
@@ -40,7 +51,10 @@ const itemsAmount = ref(productComponents.value.length);
 <template>
   <div class="shop-view">
     <ShopHeader header-title="All Products" :itemsAmount="itemsAmount" />
-    <ProductsGrid :components="productComponents" />
+    <ProductsGrid :components="finalProductComponents.components" 
+                  :total-pages="finalProductComponents.totalPages" 
+                  :limit="finalProductComponents.limit" />
+    <PaginationComponent :total-pages="finalProductComponents.totalPages" />
   </div>
 </template>
 

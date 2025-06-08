@@ -16,12 +16,12 @@ function search() {
   <header>
     <nav>
       <span class="info">
-        <RouterLink to="/">Shop</RouterLink>
+        <RouterLink to="/shop">Shop</RouterLink>
         <RouterLink to="/login">Become a Seller</RouterLink>
         <RouterLink to="/login">Contact Us</RouterLink>
       </span>
       <span class="inst">
-        <InstagramLink/>
+        <InstagramLink :dark="false"/>
       </span>
       <span class="logo">
         <LogoBlack/>
