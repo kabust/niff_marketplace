@@ -13,6 +13,7 @@
 /* semantic color variables for this project */
 :root {
   --color-background: var(--vt-c-background);
+  --color-background-dark: var(--vt-c-elem-dark);
 
   --color-heading: var(--vt-c-text);
   --color-text: var(--vt-c-text);
@@ -22,7 +23,23 @@
   --color-text-orange-hover: var(--vt-c-elem-red);
   --color-text-orange-active: var(--vt-c-elem-red-muted);
 
+  --color-border-black: var(--vt-c-text);
+  --color-border-white: var(--vt-c-background);
+
+  --color-button-disabled: var(--vt-c-elem-gray);
+
+  --base-border-black: 1px solid var(--color-border-black);
+  --base-border-white: 1px solid var(--color-border-white);
+
+  --header-height: 88px;
   --section-gap: 160px;
+
+  --base-transition: 0.3s ease;
+  --base-transition-ease-in-out: 0.3s ease-in-out;
+  --base-transition-fast: 0.1s ease;
+  --base-transition-slow: 0.5s ease;
+
+  --default-image-aspect-ratio: 360 / 326;
 }
 
 *,
@@ -30,7 +47,7 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
-  font-weight: normal;
+  letter-spacing: 8%;
 }
 
 input[type="search"]::-webkit-search-cancel-button {
@@ -51,4 +68,40 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 72px;
+}
+
+h2 {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 64px;
+}
+
+h3 {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+}
+
+h4 {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48px;
+}
+
+h5 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 40px;
+}
+
+h6 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
 }
