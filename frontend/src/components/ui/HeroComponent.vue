@@ -15,8 +15,6 @@ import imageHover from '@/assets/demo/image-hover.png';
 import frontImage1 from '@/assets/demo/front-image1.png';
 import frontImage2 from '@/assets/demo/front-image2.png';
 
-const buttonText = `Discover Products`;
-
 const api_responses = ref([
   { src: image1, bg: imageHover, link: '' },
   { src: image2, bg: imageHover, link: '' },

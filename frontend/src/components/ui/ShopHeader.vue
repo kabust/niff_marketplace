@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import Arrow from '@/assets/images/Arrow.svg'
 
 defineProps({
