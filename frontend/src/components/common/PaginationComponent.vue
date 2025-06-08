@@ -6,7 +6,7 @@ import Arrow from '@/assets/images/Arrow.svg'
 const route = useRoute();
 const router = useRouter();
 
-defineProps({
+const props = defineProps({
   totalPages: {
     type: Number,
     required: true
@@ -23,7 +23,7 @@ const prevPage = () => {
 };
 
 const nextPage = () => {
-  if (currentPage.value < totalPages) {
+  if (currentPage.value < props.totalPages) {
     currentPage.value++;
     router.push({ query: { ...route.query, page: currentPage.value }});
   }
