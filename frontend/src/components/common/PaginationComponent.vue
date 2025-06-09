@@ -15,16 +15,9 @@ const props = defineProps({
 
 const currentPage = ref(Number(route.query.page) || 1);
 
-const prevPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value--;
-    router.push({ query: { ...route.query, page: currentPage.value }});
-  }
-};
-
-const nextPage = () => {
-  if (currentPage.value < props.totalPages) {
-    currentPage.value++;
+const changePage = (page) => {
+  if (page > 0 && page <= props.totalPages) {
+    currentPage.value = page;
     router.push({ query: { ...route.query, page: currentPage.value }});
   }
 };
@@ -34,11 +27,11 @@ const nextPage = () => {
 <template>
   <div class="pagination-component">
     <div class="pagination-controls">
-      <button @click="prevPage" :disabled="currentPage === 1"><Arrow class="arrow-left"/></button>
+      <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"><Arrow class="arrow-left"/></button>
       <button class="current">{{ currentPage }}</button>
-      <button>{{ currentPage + 1 }}</button>
-      <button>{{ currentPage + 2 }}</button>
-      <button @click="nextPage" :disabled="currentPage === totalPages"><Arrow class="arrow-right"/></button>
+      <button @click="changePage(currentPage + 1)">{{ currentPage + 1 }}</button>
+      <button @click="changePage(currentPage + 2)">{{ currentPage + 2 }}</button>
+      <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"><Arrow class="arrow-right"/></button>
     </div>
   </div>
 </template>
@@ -96,10 +89,11 @@ button:not(.current):not(:disabled):active svg :deep(path)
   transform: rotate(0deg);
 }
 
-button:disabled {
-  opacity: 0.5;
+button:disabled, button:disabled svg :deep(path) {
   cursor: default;
   border-color: var(--color-text-gray);
+  background-color: var(--color-text-gray);
+  stroke: var(--color-text-white);
 }
 
 .current {

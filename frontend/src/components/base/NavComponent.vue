@@ -1,5 +1,8 @@
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
+
+import throttle from 'lodash/throttle'
 
 import Search from '@/assets/images/Search.svg'
 import Cart from '@/assets/images/Cart.svg'
@@ -10,10 +13,29 @@ import InstagramLink from '../common/InstagramLink.vue'
 function search() {
   console.log("test");
 }
+
+const isHidden = ref(false);
+let lastScrollY = window.scrollY;
+
+const handleScroll = () => {
+  const currentScrollY = window.scrollY
+  isHidden.value = currentScrollY > lastScrollY && currentScrollY > 100
+  lastScrollY = currentScrollY
+}
+
+const throttledScroll = throttle(handleScroll, 200);
+
+onMounted(() => {
+  window.addEventListener('scroll', throttledScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', throttledScroll)
+})
 </script>
 
 <template>
-  <header>
+  <header :class="['navbar', { 'navbar--hidden': isHidden }]">
     <nav>
       <span class="info">
         <RouterLink to="/shop">Shop</RouterLink>
@@ -42,8 +64,10 @@ function search() {
 
 <style scoped>
 header {
-  max-height: 72px;
-  position: relative;
+  max-height: var(--navbar-height);
+  position: sticky;
+  top: 0;
+  background: white;
   z-index: 1;
 }
 
@@ -153,5 +177,15 @@ nav span:last-child {
 nav .inst, .inst a {display: flex; flex: 0 0 15%; gap: 8px;}
 nav .search { gap: 8px;}
 nav .user, .user a  { display: flex; flex: 0 0 15%; gap: 8px; }
+
+.navbar {
+  position: fixed;
+  background-color: var(--color-background);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+.navbar--hidden {
+  transform: translateY(-100%);
+}
 
 </style>

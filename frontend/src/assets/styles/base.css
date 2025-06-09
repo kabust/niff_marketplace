@@ -40,6 +40,8 @@
   --base-transition-slow: 0.5s ease;
 
   --default-image-aspect-ratio: 360 / 326;
+
+  --navbar-height: 72px;
 }
 
 *,

@@ -55,7 +55,14 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL), // Uses HTML5 History API (clean URLs)
-  routes: routes // short for `routes: routes`
+  routes: routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  }
 });
 
 // Navigation Guard (Global beforeEach)

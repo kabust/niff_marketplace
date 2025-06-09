@@ -10,6 +10,7 @@
   body {
     display: flex;
     place-items: top;
+    padding-top: var(--navbar-height);
   }
 
   #app {
