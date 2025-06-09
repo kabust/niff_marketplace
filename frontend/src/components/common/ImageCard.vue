@@ -17,8 +17,8 @@ const hover = ref(false);
 </script>
 
 <template>
-  <div class="image-card" @mouseenter="hover = true" @mouseleave="hover = false">
-    <div class="image-container">
+  <div class="image-card">
+    <div class="image-container" @mouseenter="hover = true" @mouseleave="hover = false">
       <img :src="src" alt="primary" class="card-image base-image" />
       <img :src="bg || src" alt="hover" class="card-image hover-image"
         :class="{ 'opacity-100': hover, 'opacity-0': !hover }" />

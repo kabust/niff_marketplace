@@ -54,6 +54,14 @@ defineProps({
   gap: 8px;
 }
 
+.product-info .product-title {
+  transition: var(--base-transition);
+}
+
+.product-info:hover .product-title {
+  color: var(--color-text-orange-hover);
+}
+
 .product-info p {
   font-size: 16px;
   line-height: 24px;
