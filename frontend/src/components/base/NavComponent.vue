@@ -182,8 +182,9 @@ nav .user, .user a  { display: flex; flex: 0 0 15%; gap: 8px; }
   position: fixed;
   background-color: var(--color-background);
   transition: transform 0.3s ease;
-  z-index: 1000;
+  /*z-index: 1000;*/
 }
+
 .navbar--hidden {
   transform: translateY(-100%);
 }

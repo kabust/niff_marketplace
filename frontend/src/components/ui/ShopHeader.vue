@@ -1,5 +1,7 @@
 <script setup>
-import Arrow from '@/assets/images/Arrow.svg'
+import { ref } from 'vue';
+import Arrow from '@/assets/images/Arrow.svg';
+import FilterModal from "@/components/base/FilterModal.vue";
 
 defineProps({
   headerTitle: {
@@ -11,12 +13,15 @@ defineProps({
     default: 0,
   }
 });
+
+const showFilters = ref(false);
 </script>
 
 <template>
   <div class="shop-header">
     <h4>{{ headerTitle }}<sup>({{ itemsAmount }})</sup></h4>
-    <button>Filters  <Arrow/></button>
+    <button @click="showFilters = true">Filters  <Arrow/></button>
+    <FilterModal :show="showFilters" @close="showFilters = false" />
   </div>
 </template>
 
