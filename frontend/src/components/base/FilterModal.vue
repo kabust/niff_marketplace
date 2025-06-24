@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import RolloutArrow from "@/components/common/RolloutArrow.vue";
 
 const props = defineProps({
   show: Boolean
@@ -38,8 +39,17 @@ const close = () => emit('close')
 
       <!-- Category Filter -->
       <div class="accordion">
-        <h6 class="accordion-header" @click="toggle('category')">Category</h6>
-        <div v-show="sections.category" class="accordion-content">
+        <div class="accordion-header-container">
+          <h6 class="accordion-header" @click="toggle('category')">Category</h6>
+          <RolloutArrow :reversed="sections.category"/>
+        </div>
+        <div v-if="sections.category" class="accordion-content active">
+          <label v-for="item in categories" :key="item" class="checkbox-label">
+            <input type="checkbox" v-model="selectedCategories" :value="item" />
+            {{ item }}
+          </label>
+        </div>
+        <div v-else class="accordion-content hidden">
           <label v-for="item in categories" :key="item" class="checkbox-label">
             <input type="checkbox" v-model="selectedCategories" :value="item" />
             {{ item }}
@@ -49,7 +59,10 @@ const close = () => emit('close')
 
       <!-- Price Filter -->
       <div class="accordion">
-        <h6 class="accordion-header" @click="toggle('price')">Price</h6>
+        <div class="accordion-header-container">
+          <h6 class="accordion-header" @click="toggle('price')">Price</h6>
+          <RolloutArrow/>
+        </div>
         <div v-show="sections.price" class="accordion-content">
           <div class="price-inputs">
             <input type="number" v-model="price.min" />
@@ -66,10 +79,6 @@ const close = () => emit('close')
 </template>
 
 <style scoped>
-h6 {
-  padding: 40px 32px;
-}
-
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -118,6 +127,17 @@ h6 {
   margin: auto;
 }
 
+.accordion {
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.accordion-header-container {
+  display: flex;
+}
+
 .accordion, .filter-header {
   border-bottom: var(--base-border-black);
 }
@@ -129,10 +149,6 @@ h6 {
   width: 100%;
   text-align: left;
   cursor: pointer;
-}
-
-.accordion-content {
-  padding-left: 10px;
 }
 
 .checkbox-label {
@@ -152,5 +168,27 @@ h6 {
 .price-inputs input[type="number"] {
   width: 60px;
   padding: 4px;
+}
+
+.accordion-content {
+  transition: var(--base-transition);
+}
+
+.accordion-content.hidden {
+  display: none;
+}
+
+.accordion-content.active{
+  display: block;
+  animation: slide-in-bottom 0.3s ease forwards;
+}
+
+@keyframes slide-in-bottom {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 </style>
