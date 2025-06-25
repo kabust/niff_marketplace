@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import AccordionComponent from "@/components/common/AccordionComponent.vue";
-import RolloutArrow from "@/components/common/RolloutArrow.vue";
+import SliderComponent from "@/components/common/SliderComponent.vue";
 
 defineProps({
   show: Boolean
@@ -10,19 +10,24 @@ defineProps({
 const emit = defineEmits(['close'])
 
 const categories = ['T-Shirts', 'Hoodies', 'Pants', 'Accessories']
-const price = ref({ min: 300, max: 749 })
 const sizes = ['XS', 'S', 'M', 'L', 'XL']
 const colors = ['White', 'Black', 'Add more from api']
+const sortBy = ['Price: Low to High', 'Price: High to Low', 'Newest First', 'Oldest First']
+
+const minValue = 120;
+const maxValue = 5300;
 
 const selectedCategories = ref([])
 const selectedSizes = ref([])
 const selectedColors = ref([])
+const selectedSortBy = ref()
 
 const sections = ref({
   category: false,
   price: false,
   size: false,
-  color: false
+  color: false,
+  sortBy: false
 })
 
 const toggle = (section) => {
@@ -39,19 +44,17 @@ const close = () => emit('close')
         <div class="filter-modal">
           <div class="filter-header">
             <h4 class="modal-title">Filters</h4>
-            <button class="close-btn" @click="close">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 6L6 18" stroke="#111111" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M6 6L18 18" stroke="#111111" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
+            <svg class="close-btn" @click="close" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18" stroke="#111111" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 6L18 18" stroke="#111111" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
 
           <!-- Category Filter -->
           <AccordionComponent
             title="Categories"
             :is-active="sections.category"
-            @click="toggle('category')"
+            @toggle="toggle('category')"
           >
             <label v-for="item in categories" :key="item" class="checkbox-label">
               <input type="checkbox" v-model="selectedCategories" :value="item" />
@@ -63,13 +66,10 @@ const close = () => emit('close')
           <AccordionComponent
             title="Price"
             :is-active="sections.price"
-            @click="toggle('price')"
+            @toggle="toggle('price')"
           >
             <div class="price-inputs">
-              <input type="number" v-model="price.min" />
-              <input type="range" min="0" max="1000" v-model="price.min" />
-              <input type="range" min="0" max="1000" v-model="price.max" />
-              <input type="number" v-model="price.max" />
+              <SliderComponent :minValue="minValue" :maxValue="maxValue"/>
             </div>
           </AccordionComponent>
 
@@ -77,7 +77,7 @@ const close = () => emit('close')
           <AccordionComponent
             title="Size"
             :is-active="sections.size"
-            @click="toggle('size')"
+            @toggle="toggle('size')"
           >
             <label v-for="item in sizes" :key="item" class="checkbox-label">
               <input type="checkbox" v-model="selectedSizes" :value="item" />
@@ -89,10 +89,22 @@ const close = () => emit('close')
           <AccordionComponent
             title="Color"
             :is-active="sections.color"
-            @click="toggle('color')"
+            @toggle="toggle('color')"
           >
             <label v-for="item in colors" :key="item" class="checkbox-label">
               <input type="checkbox" v-model="selectedColors" :value="item" />
+              {{ item }}
+            </label>
+          </AccordionComponent>
+
+          <!-- Sort By Filter -->
+          <AccordionComponent
+            title="Sort By"
+            :is-active="sections.sortBy"
+            @toggle="toggle('sortBy')"
+          >
+            <label v-for="item in sortBy" :key="item" class="checkbox-label">
+              <input type="radio" v-model="selectedSortBy" :value="item" />
               {{ item }}
             </label>
           </AccordionComponent>
@@ -130,7 +142,7 @@ const close = () => emit('close')
 
 .close-btn {
   position: absolute;
-  right: 40px;
+  right: 24px;
   top: 40px;
   background: none;
   border: none;
@@ -159,11 +171,6 @@ const close = () => emit('close')
   margin-top: 10px;
 }
 
-.price-inputs input[type="number"] {
-  width: 60px;
-  padding: 4px;
-}
-
 /* transition classes for modal */
 .slide-enter-active, .slide-leave-active {
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -188,6 +195,5 @@ const close = () => emit('close')
 .fade-enter-to, .fade-leave-from {
   opacity: 1;
 }
-
 
 </style>

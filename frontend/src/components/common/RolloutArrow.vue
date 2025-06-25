@@ -23,6 +23,10 @@ svg {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.rollout-arrow {
+  margin-right: 24px;
+}
+
 .reversed svg {
   transform: rotate(180deg);
 }

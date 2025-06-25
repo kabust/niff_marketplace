@@ -16,7 +16,7 @@ const props = defineProps({
 
 <template>
   <div class="accordion">
-    <div class="accordion-header-container">
+    <div class="accordion-header-container" @click="$emit('toggle')">
       <h6 class="accordion-header">{{ title }}</h6>
       <RolloutArrow :reversed="props.isActive"/>
     </div>
@@ -29,14 +29,18 @@ const props = defineProps({
 
 <style scoped>
 .accordion {
-  padding: 40px 32px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
 }
 
+.accordion h6 {
+  margin: 24px;
+}
+
 .accordion-header-container {
   display: flex;
+  align-items: center;
 }
 
 .accordion-header {
@@ -50,12 +54,21 @@ const props = defineProps({
 .accordion-content {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), display 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 0 24px;
+  position: relative;
+  transition: max-height 0.3s cubic-bezier(.77, 0, .18, 1);
 }
-
+.accordion-content::after {
+  content: "";
+  display: block;
+  height: 0;
+  transition: height 0.3s cubic-bezier(.86,0,.07,1);
+}
 .accordion-content.active {
   max-height: 500px; /* adjust as needed for content */
   display: block;
-  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), display 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.accordion-content.active::after {
+  height: 24px; /* bottom space when open */
 }
 </style>
