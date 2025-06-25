@@ -43,13 +43,7 @@ const close = () => emit('close')
           <h6 class="accordion-header" @click="toggle('category')">Category</h6>
           <RolloutArrow :reversed="sections.category"/>
         </div>
-        <div v-if="sections.category" class="accordion-content active">
-          <label v-for="item in categories" :key="item" class="checkbox-label">
-            <input type="checkbox" v-model="selectedCategories" :value="item" />
-            {{ item }}
-          </label>
-        </div>
-        <div v-else class="accordion-content hidden">
+        <div :class="['accordion-content', { active: sections.category }]" >
           <label v-for="item in categories" :key="item" class="checkbox-label">
             <input type="checkbox" v-model="selectedCategories" :value="item" />
             {{ item }}
@@ -65,6 +59,12 @@ const close = () => emit('close')
         </div>
         <div v-show="sections.price" class="accordion-content">
           <div class="price-inputs">
+        <div class="accordion-header-container">
+          <h6 class="accordion-header" @click="toggle('price')">Price</h6>
+          <RolloutArrow :reversed="sections.price"/>
+        </div>
+        <div :class="['accordion-content', { active: sections.price }]" >
+          <div class="price-inputs">
             <input type="number" v-model="price.min" />
             <input type="range" min="0" max="1000" v-model="price.min" />
             <input type="range" min="0" max="1000" v-model="price.max" />
@@ -72,10 +72,10 @@ const close = () => emit('close')
           </div>
         </div>
       </div>
-
-      <!-- Add more filters below -->
     </div>
   </div>
+</div>
+</div>
 </template>
 
 <style scoped>
@@ -178,17 +178,16 @@ const close = () => emit('close')
   display: none;
 }
 
-.accordion-content.active{
-  display: block;
-  animation: slide-in-bottom 0.3s ease forwards;
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes slide-in-bottom {
-  from {
-    transform: translateY(-50%);
-  }
-  to {
-    transform: translateY(0);
-  }
+.accordion-content.active {
+  max-height: 500px; /* adjust as needed for content */
+  opacity: 1;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>
