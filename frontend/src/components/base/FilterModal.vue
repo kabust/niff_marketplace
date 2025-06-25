@@ -1,20 +1,28 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
+import AccordionComponent from "@/components/common/AccordionComponent.vue";
 import RolloutArrow from "@/components/common/RolloutArrow.vue";
 
-const props = defineProps({
+defineProps({
   show: Boolean
 })
 
 const emit = defineEmits(['close'])
 
-const selectedCategories = ref([])
 const categories = ['T-Shirts', 'Hoodies', 'Pants', 'Accessories']
 const price = ref({ min: 300, max: 749 })
+const sizes = ['XS', 'S', 'M', 'L', 'XL']
+const colors = ['White', 'Black', 'Add more from api']
+
+const selectedCategories = ref([])
+const selectedSizes = ref([])
+const selectedColors = ref([])
 
 const sections = ref({
-  category: true,
-  price: true,
+  category: false,
+  price: false,
+  size: false,
+  color: false
 })
 
 const toggle = (section) => {
@@ -25,57 +33,73 @@ const close = () => emit('close')
 </script>
 
 <template>
-  <div v-if="show" class="modal-backdrop" @click.self="close">
-    <div class="filter-modal">
-      <div class="filter-header">
-        <h4 class="modal-title">Filters</h4>
-        <button class="close-btn" @click="close">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 6L6 18" stroke="#111111" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6 6L18 18" stroke="#111111" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Category Filter -->
-      <div class="accordion">
-        <div class="accordion-header-container">
-          <h6 class="accordion-header" @click="toggle('category')">Category</h6>
-          <RolloutArrow :reversed="sections.category"/>
-        </div>
-        <div :class="['accordion-content', { active: sections.category }]" >
-          <label v-for="item in categories" :key="item" class="checkbox-label">
-            <input type="checkbox" v-model="selectedCategories" :value="item" />
-            {{ item }}
-          </label>
-        </div>
-      </div>
-
-      <!-- Price Filter -->
-      <div class="accordion">
-        <div class="accordion-header-container">
-          <h6 class="accordion-header" @click="toggle('price')">Price</h6>
-          <RolloutArrow/>
-        </div>
-        <div v-show="sections.price" class="accordion-content">
-          <div class="price-inputs">
-        <div class="accordion-header-container">
-          <h6 class="accordion-header" @click="toggle('price')">Price</h6>
-          <RolloutArrow :reversed="sections.price"/>
-        </div>
-        <div :class="['accordion-content', { active: sections.price }]" >
-          <div class="price-inputs">
-            <input type="number" v-model="price.min" />
-            <input type="range" min="0" max="1000" v-model="price.min" />
-            <input type="range" min="0" max="1000" v-model="price.max" />
-            <input type="number" v-model="price.max" />
+  <transition name="fade">
+    <div v-if="show" class="modal-backdrop" @click.self="close">
+      <transition name="slide" appear>
+        <div class="filter-modal">
+          <div class="filter-header">
+            <h4 class="modal-title">Filters</h4>
+            <button class="close-btn" @click="close">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18" stroke="#111111" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 6L18 18" stroke="#111111" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
           </div>
+
+          <!-- Category Filter -->
+          <AccordionComponent
+            title="Categories"
+            :is-active="sections.category"
+            @click="toggle('category')"
+          >
+            <label v-for="item in categories" :key="item" class="checkbox-label">
+              <input type="checkbox" v-model="selectedCategories" :value="item" />
+              {{ item }}
+            </label>
+          </AccordionComponent>
+
+          <!-- Price Filter -->
+          <AccordionComponent
+            title="Price"
+            :is-active="sections.price"
+            @click="toggle('price')"
+          >
+            <div class="price-inputs">
+              <input type="number" v-model="price.min" />
+              <input type="range" min="0" max="1000" v-model="price.min" />
+              <input type="range" min="0" max="1000" v-model="price.max" />
+              <input type="number" v-model="price.max" />
+            </div>
+          </AccordionComponent>
+
+          <!-- Size Filter -->
+          <AccordionComponent
+            title="Size"
+            :is-active="sections.size"
+            @click="toggle('size')"
+          >
+            <label v-for="item in sizes" :key="item" class="checkbox-label">
+              <input type="checkbox" v-model="selectedSizes" :value="item" />
+              {{ item }}
+            </label>
+          </AccordionComponent>
+
+          <!-- Color Filter -->
+          <AccordionComponent
+            title="Color"
+            :is-active="sections.color"
+            @click="toggle('color')"
+          >
+            <label v-for="item in colors" :key="item" class="checkbox-label">
+              <input type="checkbox" v-model="selectedColors" :value="item" />
+              {{ item }}
+            </label>
+          </AccordionComponent>
         </div>
-      </div>
+      </transition>
     </div>
-  </div>
-</div>
-</div>
+  </transition>
 </template>
 
 <style scoped>
@@ -95,17 +119,7 @@ const close = () => emit('close')
   height: 100%;
   overflow-y: auto;
   position: relative;
-  animation: slide-in 0.3s ease forwards;
   z-index: 1;
-}
-
-@keyframes slide-in {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
 }
 
 .filter-header {
@@ -127,28 +141,8 @@ const close = () => emit('close')
   margin: auto;
 }
 
-.accordion {
-  padding: 40px 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.accordion-header-container {
-  display: flex;
-}
-
 .accordion, .filter-header {
   border-bottom: var(--base-border-black);
-}
-
-.accordion-header {
-  font-weight: bold;
-  background: none;
-  border: none;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
 }
 
 .checkbox-label {
@@ -170,24 +164,30 @@ const close = () => emit('close')
   padding: 4px;
 }
 
-.accordion-content {
-  transition: var(--base-transition);
+/* transition classes for modal */
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.accordion-content.hidden {
-  display: none;
-}
-
-.accordion-content {
-  max-height: 0;
-  overflow: hidden;
+.slide-enter-from, .slide-leave-to {
+  transform: translateX(100%);
   opacity: 0;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.accordion-content.active {
-  max-height: 500px; /* adjust as needed for content */
+.slide-enter-to, .slide-leave-from {
+  transform: translateX(0);
   opacity: 1;
-  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-to, .fade-leave-from {
+  opacity: 1;
+}
+
+
 </style>
