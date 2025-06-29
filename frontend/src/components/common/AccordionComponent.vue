@@ -56,7 +56,7 @@ const props = defineProps({
   overflow: hidden;
   margin: 0 24px;
   position: relative;
-  transition: max-height 0.3s cubic-bezier(.77, 0, .18, 1);
+  transition: max-height 0.3s cubic-bezier(1,0,0,1);
 }
 .accordion-content::after {
   content: "";

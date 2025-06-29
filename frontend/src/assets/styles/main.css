@@ -18,3 +18,14 @@
     overflow-x: hidden;
   }
 }
+
+@media screen and (max-width: 1023px) {
+  body {
+    padding-top: 0;
+  }
+
+  #app {
+    padding: 0 0;
+    overflow-x: hidden;
+  }
+}

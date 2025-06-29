@@ -15,7 +15,7 @@ const colors = ['White', 'Black', 'Add more from api']
 const sortBy = ['Price: Low to High', 'Price: High to Low', 'Newest First', 'Oldest First']
 
 const minValue = 120;
-const maxValue = 5300;
+const maxValue = 10200;
 
 const selectedCategories = ref([])
 const selectedSizes = ref([])
@@ -68,9 +68,7 @@ const close = () => emit('close')
             :is-active="sections.price"
             @toggle="toggle('price')"
           >
-            <div class="price-inputs">
-              <SliderComponent :minValue="minValue" :maxValue="maxValue"/>
-            </div>
+            <SliderComponent :minValue="minValue" :maxValue="maxValue"/>
           </AccordionComponent>
 
           <!-- Size Filter -->
@@ -161,14 +159,6 @@ const close = () => emit('close')
   display: block;
   margin: 5px 0;
   font-size: 14px;
-}
-
-.price-inputs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-  margin-top: 10px;
 }
 
 /* transition classes for modal */
